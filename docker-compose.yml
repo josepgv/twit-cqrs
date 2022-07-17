@@ -3,7 +3,7 @@ services:
 
   nginx:
     image: nginx:1.20.1
-    container_name: nginx_sydock
+    container_name: nginx_twit_cqrs
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -19,7 +19,7 @@ services:
     build:
       context: php
       dockerfile: php8.1.dockerfile
-    container_name: php_sydock
+    container_name: php_twit_cqrs
     restart: unless-stopped
     user: 1000:1000
     volumes:
@@ -34,10 +34,10 @@ services:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    container_name: db_sy6
+    container_name: db_twit_cqrs
     environment:
       MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: sy6
+      MYSQL_DATABASE: db_twit_cqrs
       MYSQL_USER: symfony
       MYSQL_PASSWORD: symfony
     ports:
@@ -53,7 +53,7 @@ services:
 
   rabbit:
     image: rabbitmq:3-management
-    container_name: rabbit_sy6
+    container_name: rabbit_twit_cqrs
     ports:
       - "15672:15672"
     networks:
