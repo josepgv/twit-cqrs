@@ -1,0 +1,63 @@
+version: '3'
+services:
+
+  nginx:
+    image: nginx:1.20.1
+    container_name: nginx_sydock
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - myapp
+
+  php:
+    build:
+      context: php
+      dockerfile: php8.1.dockerfile
+    container_name: php_sydock
+    restart: unless-stopped
+    user: 1000:1000
+    volumes:
+      - ./app:/var/www/html
+      - ./phpstorm-coverage:/opt/phpstorm-coverage
+    ports:
+      - "29001:80"
+    networks:
+      - myapp
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: db_sy6
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: sy6
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: symfony
+    ports:
+      - "33060:3306"
+    networks:
+      - myapp
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8090:8080"
+
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbit_sy6
+    ports:
+      - "15672:15672"
+    networks:
+      - myapp
+
+networks:
+  myapp:
