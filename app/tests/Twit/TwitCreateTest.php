@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Tests\Twit;
+declare(strict_types=1);
 
+namespace App\Tests\Twit;
 
 use App\Twit\Domain\Entity\Twit;
 use DateTime;
@@ -17,11 +18,8 @@ class TwitCreateTest extends TestCase
         $twit = new Twit($uuid, 50, 'This is the content', $date);
 
         $this->assertEquals('This is the content', $twit->content());
-        //$this->assertEquals(1337, $twit->getUserId());
-        //$this->assertEquals($date, $twit->getCreatedAt());
+        // $this->assertEquals(1337, $twit->getUserId());
+        // $this->assertEquals($date, $twit->getCreatedAt());
         $this->assertEquals($uuid, $twit->uuid());
-
     }
-
-
 }

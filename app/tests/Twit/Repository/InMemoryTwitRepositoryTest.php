@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Twit\Repository;
 
 use App\Twit\Domain\Entity\Twit;
@@ -16,7 +18,7 @@ class InMemoryTwitRepositoryTest extends TestCase
 
         $date = DateTime::createFromFormat('Y-m-d H:i:s', '2022-06-07 19:29:00');
         $uuid = Uuid::v4()->toRfc4122();
-        $twit = new Twit($uuid, 500, 'This is the content', $date );
+        $twit = new Twit($uuid, 500, 'This is the content', $date);
 
         $repo->save($twit);
 
@@ -24,6 +26,5 @@ class InMemoryTwitRepositoryTest extends TestCase
 
         $this->expectException(\Exception::class);
         $repo->findOneByUuidOrFail(50000000);
-
     }
 }

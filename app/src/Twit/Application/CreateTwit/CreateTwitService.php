@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twit\Application\CreateTwit;
 
 use App\Twit\Application\CreateTwit\DTO\CreateTwitInputDTO;
@@ -10,7 +12,6 @@ class CreateTwitService
 {
     public function __construct(private readonly TwitRepository $repository)
     {
-
     }
 
     public function handle(CreateTwitInputDTO $inputDTO): string

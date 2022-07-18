@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twit\Domain\Entity;
 
 use DateTime;
@@ -10,7 +12,6 @@ class Twit
 
     public function __construct(private string $uuid, private int $user_id, private string $content, private DateTime $created_at)
     {
-
     }
 
     public function id(): int
@@ -22,7 +23,7 @@ class Twit
     {
         return $this->uuid;
     }
-    
+
     public function user_id(): int
     {
         return $this->user_id;

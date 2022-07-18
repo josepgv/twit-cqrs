@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twit\Domain\Repository;
 
 use App\Twit\Domain\Entity\Twit;

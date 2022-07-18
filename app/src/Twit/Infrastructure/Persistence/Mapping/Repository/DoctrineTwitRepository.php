@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twit\Infrastructure\Persistence\Mapping\Repository;
 
 use App\Twit\Domain\Entity\Twit;
@@ -8,13 +10,9 @@ use App\Twit\Domain\Repository\TwitRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-use Exception;
 
 class DoctrineTwitRepository implements TwitRepository
 {
-
-
-
     private ObjectManager $entityManager;
     private ServiceEntityRepository $repository;
 
@@ -25,16 +23,15 @@ class DoctrineTwitRepository implements TwitRepository
     }
 
     /**
-     * @param string $uuid
-     * @return Twit
      * @throws TwitNotFoundException
      */
     public function findOneByUuidOrFail(string $uuid): Twit
     {
         $twit = $this->findOneByUuid($uuid);
-        if(!$twit) {
+        if (!$twit) {
             throw new TwitNotFoundException("TODO FIX THIS EXCEPTION - Twit UUID {$uuid} not found");
         }
+
         return $twit;
     }
 

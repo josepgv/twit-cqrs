@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Message\SendTwitMessage;
-
 use App\Twit\Domain\Repository\TwitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,16 +19,15 @@ class PruebaController extends AbstractController
     {
         $twits = $repository->findBy([], null, 50);
 
-        foreach (range(1, 1) as $i){
-            $bus->dispatch(new SendTwitMessage('hola manolito ' . random_int(0, 1337) . ' - ' . $i), [
-                new DelayStamp(1000)
+        foreach (range(1, 1) as $i) {
+            $bus->dispatch(new SendTwitMessage('hola manolito '.random_int(0, 1337).' - '.$i), [
+                new DelayStamp(1000),
             ]);
         }
 
-
         return $this->render('prueba/index.html.twig', [
             'controller_name' => 'PruebaController',
-            'twits'           => $twits
+            'twits' => $twits,
         ]);
     }
 }

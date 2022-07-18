@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message;
 
 final class SendTwitMessage
@@ -11,7 +13,6 @@ final class SendTwitMessage
 
     public function __construct(private string $twitContent)
     {
-
     }
 
     public function getTwitContent(): string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twit\Infrastructure\Persistence\Mapping\Repository;
 
 use App\Twit\Domain\Entity\Twit;
@@ -10,7 +12,7 @@ use Doctrine\Common\Collections\Collection;
 
 class InMemoryTwitRepository implements TwitRepository
 {
-    /** @var Collection<int, Twit> $twits */
+    /** @var Collection<int, Twit> */
     private Collection $twits;
 
     public function __construct()
@@ -19,8 +21,6 @@ class InMemoryTwitRepository implements TwitRepository
     }
 
     /**
-     * @param string $uuid
-     * @return Twit
      * @throws TwitNotFoundException
      */
     public function findOneByUuidOrFail(string $uuid): Twit
@@ -35,6 +35,7 @@ class InMemoryTwitRepository implements TwitRepository
                 return $twit;
             }
         }
+
         return null;
     }
 
@@ -45,6 +46,6 @@ class InMemoryTwitRepository implements TwitRepository
 
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
-        //return $this->twits->key($criteria['id']);
+        // return $this->twits->key($criteria['id']);
     }
 }
