@@ -25,6 +25,6 @@ class InMemoryTwitRepositoryTest extends TestCase
         $this->assertEquals($twit, $repo->findOneByUuid($uuid));
 
         $this->expectException(\Exception::class);
-        $repo->findOneByUuidOrFail(50000000);
+        $repo->findOneByUuidOrFail('50000000');
     }
 }

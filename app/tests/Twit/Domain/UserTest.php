@@ -32,6 +32,23 @@ class UserTest extends TestCase
         $this->assertEquals('my bio', $user->bio());
     }
 
+    public function testUserWithNullBioAndWebsiteIsCreated(): void
+    {
+        $uuid = Uuid::uuid4();
+
+        $user = User::signUp(
+            UserId::fromUuid($uuid),
+            UserNickName::pick('Manolito'),
+            UserEmail::fromString('manolito@google.com'),
+            null,
+            null
+        );
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertEquals($uuid, $user->userId()->id());
+        $this->assertEquals('Manolito', $user->nickName());
+        $this->assertEquals('manolito@google.com', $user->email());
+    }
+
     public function testNickNameCannotBeEmpty(): void
     {
         $this->expectException(\InvalidArgumentException::class);

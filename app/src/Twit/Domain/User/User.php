@@ -37,7 +37,7 @@ class User
         $this->bio = $this->checkIsNotNull($bio, 'Biography cannot be empty');
     }
 
-    private function checkIsNotNull(?string $value, string $errorMessage): string
+    private function checkIsNotNull(?string $value, string $errorMessage): ?string
     {
         if ('' === $value) {
             throw new \InvalidArgumentException($errorMessage);
