@@ -2,8 +2,7 @@
 
 namespace App\Tests\Twit\Application\User;
 
-use App\Twit\Application\User\SignUpCommand;
-use App\Twit\Application\User\SignUpCommandHandler;
+use App\Twit\Application\User\Command\SignUpCommandHandler;
 use App\Twit\Domain\User\UserAlreadyExistsException;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Infrastructure\DomainModel\User\InMemoryUserRepository;
@@ -15,10 +14,10 @@ class SignUpCommandHandlerTest extends TestCase
     public function testUserIsCreated(): void
     {
         $userRepository = new InMemoryUserRepository();
-        $handler        = new SignUpCommandHandler($userRepository);
+        $handler        = new \App\Twit\Application\User\Command\SignUpCommandHandler($userRepository);
 
         $uuid = Uuid::uuid4();
-        $handler(new SignUpCommand(
+        $handler(new \App\Twit\Application\User\Command\SignUpCommand(
             $uuid,
             'Manolito',
             'manolito@google.com',
@@ -36,14 +35,14 @@ class SignUpCommandHandlerTest extends TestCase
         $handler        = new SignUpCommandHandler($userRepository);
 
         $uuid = Uuid::uuid4();
-        $handler(new SignUpCommand(
+        $handler(new \App\Twit\Application\User\Command\SignUpCommand(
             $uuid,
             'Manolito',
             'manolito@google.com',
         ));
 
         $this->expectException(UserAlreadyExistsException::class);
-        $handler(new SignUpCommand(
+        $handler(new \App\Twit\Application\User\Command\SignUpCommand(
             $uuid,
             'New Manolito',
             'new-manolito@google.com',
@@ -53,16 +52,16 @@ class SignUpCommandHandlerTest extends TestCase
     public function testUserWithSameNickNameCannotBeCreated(): void
     {
         $userRepository = new InMemoryUserRepository();
-        $handler        = new SignUpCommandHandler($userRepository);
+        $handler        = new \App\Twit\Application\User\Command\SignUpCommandHandler($userRepository);
 
-        $handler(new SignUpCommand(
+        $handler(new \App\Twit\Application\User\Command\SignUpCommand(
             Uuid::uuid4(),
             'Manolito',
             'manolito@google.com',
         ));
 
         $this->expectException(UserAlreadyExistsException::class);
-        $handler(new SignUpCommand(
+        $handler(new \App\Twit\Application\User\Command\SignUpCommand(
             Uuid::uuid4(),
             'Manolito',
             'new-manolito@google.com',

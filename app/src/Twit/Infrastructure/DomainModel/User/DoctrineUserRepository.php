@@ -29,13 +29,16 @@ class DoctrineUserRepository implements UserRepositoryInterface
 
     public function ofNickName(UserNickName $nickName): ?User
     {
-        // TODO: Implement ofNickName() method.
-        return null;
+        return $this->entityManager
+            ->getRepository(User::class)
+            ->findOneBy([
+                'nickName' => $nickName->nickName()
+            ]);
     }
 
     public function add(User $user): void
     {
         $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        //$this->entityManager->flush();
     }
 }

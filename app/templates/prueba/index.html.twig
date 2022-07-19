@@ -11,15 +11,15 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    {{ dump(twits) }}
+    {{ dump(user) }}
 
-    {% for twit in twits %}
+    {#{% for twit in twits %}
     <div>
         <h4>{{ twit.content }}</h4>
         <h6>{{ twit.createdAt | date('d m Y - H:i:s') }} ({{ twit.uuid }})</h6>
     </div>
         <hr>
-    {% endfor %}
+    {% endfor %}#}
 
     This friendly message is coming from:
     <ul>

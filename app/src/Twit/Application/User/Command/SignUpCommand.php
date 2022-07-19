@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Twit\Application\User;
+namespace App\Twit\Application\User\Command;
 
 use App\Twit\Application\Command;
 

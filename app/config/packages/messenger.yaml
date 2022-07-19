@@ -1,7 +1,15 @@
 framework:
     messenger:
         failure_transport: failed
-
+        default_bus: none.bus
+        buses:
+            none.bus:
+                default_middleware: allow_no_handlers
+            command.bus:
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async:
