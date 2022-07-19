@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Twit\Application\User\Command;
 
+use App\Twit\Application\EventBusInterface;
+use App\Twit\Domain\User\Event\UserSignedUp;
 use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserAlreadyExistsException;
 use App\Twit\Domain\User\UserEmail;
@@ -15,7 +17,8 @@ use App\Twit\Domain\User\UserWebsite;
 class SignUpCommandHandler
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly EventBusInterface $eventBus
     ) {
     }
 
@@ -42,6 +45,7 @@ class SignUpCommandHandler
         );
 
         $this->userRepository->add($user);
+        $this->eventBus->notify(UserSignedUp::fromUser($user));
     }
 
     private function checkUserWithSameIdDoesNotExist(?User $existingUser, UserId $userId): void
