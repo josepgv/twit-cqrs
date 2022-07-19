@@ -38,6 +38,11 @@ class UserNickName extends ValueObject implements \Stringable
 
     public function __toString(): string
     {
-        return $this->nickName();
+        return $this->toString();
+    }
+
+    private function toString(): string
+    {
+        return $this->nickName;
     }
 }

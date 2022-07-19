@@ -10,16 +10,22 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
-                #is_bundle: false
-                #dir: '%kernel.project_dir%/src/Entity'
-                #prefix: 'App\Entity'
-                #alias: App
+            #App:
+            #    #is_bundle: false
+            #    #dir: '%kernel.project_dir%/src/Entity'
+            #    #prefix: 'App\Entity'
+            #    #alias: App
+            #    type: xml
+            #    is_bundle: false
+            #    dir: '%kernel.project_dir%/src/Twit/Infrastructure/Persistence/Mapping'
+            #    prefix: 'App\Twit\Domain\Entity'
+            #    alias: App
+            TwitDomain:
                 type: xml
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Twit/Infrastructure/Persistence/Mapping'
-                prefix: 'App\Twit\Domain\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Twit/Infrastructure/DomainModel/Mapping'
+                prefix: 'App\Twit\Domain'
+                alias: TwitDomainModel
 
 when@test:
     doctrine:

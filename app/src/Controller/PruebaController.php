@@ -5,8 +5,13 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Message\SendTwitMessage;
+use App\Twit\Application\User\SignUpCommand;
+use App\Twit\Application\User\SignUpCommandHandler;
 use App\Twit\Domain\Repository\TwitRepository;
+use App\Twit\Domain\User\UserId;
+use App\Twit\Domain\User\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DelayStamp;
@@ -15,19 +20,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class PruebaController extends AbstractController
 {
     #[Route('/prueba', name: 'app_prueba')]
-    public function index(TwitRepository $repository, MessageBusInterface $bus): Response
+    public function index(UserRepositoryInterface $repository, MessageBusInterface $bus): Response
     {
-        $twits = $repository->findBy([], null, 50);
+        //$handler = new SignUpCommandHandler($repository);
+        //$handler(new SignUpCommand(
+        //    UserId::nextIdentity()->id(),
+        //    'manolito',
+        //    'mano@lito.com'
+        //));
 
-        foreach (range(1, 1) as $i) {
-            $bus->dispatch(new SendTwitMessage('hola manolito '.random_int(0, 1337).' - '.$i), [
-                new DelayStamp(1000),
-            ]);
-        }
+        $user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
+        $user = [
+            'userId' => $user->userId()->id(),
+            'nickName' => $user->nickName()->nickName(),
+            'bio' => $user->bio(),
+            'website' => $user->website()?->uri(),
+            'email' => $user->email()->email(),
+        ];
+        return new JsonResponse(['user' => $user]);
 
-        return $this->render('prueba/index.html.twig', [
-            'controller_name' => 'PruebaController',
-            'twits' => $twits,
-        ]);
     }
 }
