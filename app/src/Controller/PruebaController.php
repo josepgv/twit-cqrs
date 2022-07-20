@@ -6,7 +6,9 @@ namespace App\Controller;
 
 use App\Message\SendTwitMessage;
 use App\Twit\Application\CommandBusInterface;
+use App\Twit\Application\QueryBusInterface;
 use App\Twit\Application\User\Command\SignUpCommand;
+use App\Twit\Application\User\Query\TotalUsersCountQuery;
 use App\Twit\Domain\Repository\TwitRepository;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
@@ -17,14 +19,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class PruebaController extends AbstractController
 {
     #[Route('/prueba', name: 'app_prueba')]
-    public function index(UserRepositoryInterface $repository, CommandBusInterface $commandBus): Response
+    public function index(UserRepositoryInterface $repository, CommandBusInterface $commandBus, QueryBusInterface $queryBus): Response
     {
-        //$handler = new SignUpCommandHandler($repository);
-        //$handler(new SignUpCommand(
-        //    UserId::nextIdentity()->id(),
-        //    'manolito' . random_int(0, 5000),
-        //    'mano@lito.com'
-        //));
+        $totalUsers = $queryBus->query(new TotalUsersCountQuery());
+        
         $command = new SignUpCommand(
             UserId::nextIdentity()->id(),
             'manolito' . random_int(0, 5000),
@@ -46,6 +44,7 @@ class PruebaController extends AbstractController
         return $this->render('prueba/index.html.twig', [
             'controller_name' => 'PruebaController',
             'user' => $user,
+            'totalUsers' => $totalUsers
         ]);
     }
 }
