@@ -13,6 +13,7 @@ use App\Twit\Domain\Repository\TwitRepository;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,7 +23,7 @@ class PruebaController extends AbstractController
     public function index(UserRepositoryInterface $repository, CommandBusInterface $commandBus, QueryBusInterface $queryBus): Response
     {
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
-        
+
         $command = new SignUpCommand(
             UserId::nextIdentity()->id(),
             'manolito' . random_int(0, 5000),
@@ -33,11 +34,11 @@ class PruebaController extends AbstractController
         //$user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
         $user = $repository->ofId(UserId::fromString($command->userId));
         $user = [
-            'userId' => $user->userId()->id(),
-            'nickName' => $user->nickName()->nickName(),
-            'bio' => $user->bio(),
-            'website' => $user->website()?->uri(),
-            'email' => $user->email()->email(),
+            'userId'   => $user?->userId()->id(),
+            'nickName' => $user?->nickName()->nickName(),
+            'bio'      => $user?->bio(),
+            'website'  => $user?->website()?->uri(),
+            'email'    => $user?->email()->email(),
         ];
         //return new JsonResponse(['user' => $user]);
 
@@ -47,4 +48,10 @@ class PruebaController extends AbstractController
             'totalUsers' => $totalUsers
         ]);
     }
+    #[Route('/users/totalcount', name: 'total_users_count')]
+    public function totalUsersCount(QueryBusInterface $bus): JsonResponse
+    {
+        return new JsonResponse($bus->query(new TotalUsersCountQuery()));
+    }
+    
 }
