@@ -59,5 +59,13 @@ services:
     networks:
       - myapp
 
+  redis:
+    image: redis
+    container_name: redis_twit_cqrs
+    ports:
+      - "6379:6379"
+    networks:
+      - myapp
+
 networks:
   myapp:
