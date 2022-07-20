@@ -32,7 +32,8 @@ class PruebaController extends AbstractController
         );
         $commandBus->handle($command);
 
-        $user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
+        //$user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
+        $user = $repository->ofId(UserId::fromString($command->userId));
         $user = [
             'userId' => $user->userId()->id(),
             'nickName' => $user->nickName()->nickName(),

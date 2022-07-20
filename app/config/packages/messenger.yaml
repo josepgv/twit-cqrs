@@ -14,6 +14,12 @@ framework:
                 default_middleware: allow_no_handlers
                 middleware:
                     - validation
+            projection.bus:
+                default_middleware: allow_no_handlers
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
@@ -31,6 +37,9 @@ framework:
             commands_async: '%env(MESSENGER_TRANSPORT_DSN)%/commands'
             commands_sync: 'sync://'
 
+            projections_async: '%env(MESSENGER_TRANSPORT_DSN)%/projections'
+            projections_sync: 'sync://'
+
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             Symfony\Component\Notifier\Message\ChatMessage: async
@@ -39,3 +48,4 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             App\Twit\Domain\DomainEvent: events_async
+            App\Twit\Application\Projection: projections_async
