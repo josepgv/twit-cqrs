@@ -39,4 +39,3 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             App\Twit\Domain\DomainEvent: events_async
-            App\Twit\Application\Command: commands_async
