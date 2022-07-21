@@ -20,6 +20,8 @@ class TotalUsersCountQueryHandlerTest extends TestCase
         $queryResult = $queryHandler(new TotalUsersCountQuery());
 
         $this->assertInstanceOf(TotalUsersCountResponse::class, $queryResult);
+        $this->assertEquals(0, $queryResult->amount);
+        //$this->assertEquals((new \DateTimeImmutable('now')), $queryResult->last_updated); //@todo microseconds issue
     }
 
     public function testItReturnsWithTotalUsersCountResponseWhenRedisResponseIsNotNull(): void

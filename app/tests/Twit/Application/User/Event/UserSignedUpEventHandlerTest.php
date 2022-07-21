@@ -14,6 +14,7 @@ use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserEmail;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserNickName;
+use App\Twit\Infrastructure\Application\InMemoryProjectionBus;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -21,42 +22,53 @@ class UserSignedUpEventHandlerTest extends TestCase
 {
     public function testUserSignedUpEventHandlerDispatchesExpectedProjections(): void
     {
-        $mockProjectionBus = $this->createMock(ProjectionBusInterface::class);
+        $userId = UserId::nextIdentity();
 
-        $expectedProjections = [
-            0 => IncrementTotalUsersProjection::class,
-            1 => CreateUserFollowersCountProjection::class
+        $projectionBus = new InMemoryProjectionBus();
+
+        $expectedProjectionCalls = [
+            IncrementTotalUsersProjection::class => [
+                'expected_calls' => 1,
+                'actual_calls' => 0
+            ],
+            CreateUserFollowersCountProjection::class => [
+                'expected_calls' => 1,
+                'actual_calls' => 0
+            ]
         ];
 
-        foreach ($expectedProjections as $index => $expectedProjectionClass) {
-            $mockProjectionBus->expects($this->at($index))
-                ->method('project')
-                ->with(self::callback(function (Projection $projection) use ($expectedProjectionClass) {
-                    return $projection::class === $expectedProjectionClass;
-                }));
-        }
-
-        $event = UserSignedUp::fromUser(
+        $event  = UserSignedUp::fromUser(
             User::signUp(
-                UserId::nextIdentity(),
+                $userId,
                 UserNickName::pick('manolito'),
                 UserEmail::fromString('mano@lito.com')
             )
         );
 
+        $logger  = new FakeLogger();
         $handler = new UserSignedUpEventHandler(
-            new FakeLogger(),
-            $mockProjectionBus
+            $logger,
+            $projectionBus
         );
 
         $handler($event);
+
+        $projectionsCounter = $projectionBus->getProjectionsCounter();
+        foreach ($expectedProjectionCalls as $projectionClass => $expectations) {
+            $this->assertEquals($expectations['expected_calls'], $projectionsCounter[$projectionClass]);
+        }
+
+
+        $this->assertEquals(1, $logger->timesInfoCalled);
     }
 }
 
 class FakeLogger implements LoggerInterface
 {
+    public int $timesInfoCalled = 0;
     public function info(\Stringable|string $message, array $context = []): void
     {
+        $this->timesInfoCalled++;
     }
 
     public function emergency(\Stringable|string $message, array $context = []): void

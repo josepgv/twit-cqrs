@@ -19,7 +19,7 @@ class TotalUsersCountQueryHandler
         }
 
         return new TotalUsersCountResponse(
-            (int) $total_users['amount'],
+            intval($total_users['amount']),
             \DateTimeImmutable::createFromFormat('d/m/Y H:i:s', $total_users['last_updated'])
         );
     }
