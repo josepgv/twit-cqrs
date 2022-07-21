@@ -7,7 +7,7 @@ namespace App\Twit\Infrastructure\Application;
 use App\Twit\Application\Projection;
 use App\Twit\Application\ProjectionBusInterface;
 
-class InMemoryProjectionBus implements ProjectionBusInterface
+final class InMemoryProjectionBus implements ProjectionBusInterface
 {
     /** @var Projection[] */
     private array $projections = [];

@@ -61,6 +61,19 @@ class UserSignedUpEventHandlerTest extends TestCase
 
         $this->assertEquals(1, $logger->timesInfoCalled);
     }
+
+    public function testInMemoryProjectionBusCountsProjectionsCorrectly(): void
+    {
+        $projectionBus = new InMemoryProjectionBus();
+        $projection1 = new IncrementTotalUsersProjection();
+        $projection2 = new IncrementTotalUsersProjection();
+        $projectionBus->project($projection1);
+        $projectionBus->project($projection2);
+        $projectionsCounter = $projectionBus->getProjectionsCounter();
+
+        $this->assertEquals(2, $projectionsCounter[IncrementTotalUsersProjection::class]);
+        $this->assertInstanceOf(IncrementTotalUsersProjection::class, $projectionBus->getProjections()[IncrementTotalUsersProjection::class]);
+    }
 }
 
 class FakeLogger implements LoggerInterface

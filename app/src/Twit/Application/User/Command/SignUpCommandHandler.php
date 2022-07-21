@@ -45,7 +45,8 @@ class SignUpCommandHandler
         );
 
         $this->userRepository->add($user);
-        $this->eventBus->notify(UserSignedUp::fromUser($user));
+        //$this->eventBus->notify(UserSignedUp::fromUser($user));
+        $this->eventBus->notifyAll($user->getAndFlushDomainEvents());
     }
 
     private function checkUserWithSameIdDoesNotExist(?User $existingUser, UserId $userId): void

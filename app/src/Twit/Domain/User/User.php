@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace App\Twit\Domain\User;
 
+use App\Twit\Domain\DomainEvent;
+use App\Twit\Domain\User\Event\UserSignedUp;
+
 class User
 {
+    /** @var DomainEvent[] */
+    private array $domainEvents = [];
+
     public function __construct(
         protected string $userId,
         protected string $nickName,
@@ -14,6 +20,7 @@ class User
         protected ?string $website = null,
     ) {
         $this->setBio($bio);
+        $this->addDomainEvent(UserSignedUp::fromUser($this));
     }
 
     public static function signUp(
@@ -68,5 +75,21 @@ class User
     public function website(): ?UserWebsite
     {
         return ($this->website !== null) ? UserWebsite::fromString($this->website) : null;
+    }
+
+    protected function addDomainEvent(DomainEvent $domainEvent): void
+    {
+        $this->domainEvents[] = $domainEvent;
+    }
+
+    /**
+     * @return DomainEvent[]
+     */
+    public function getAndFlushDomainEvents(): array
+    {
+        $events = $this->domainEvents;
+        $this->domainEvents = [];
+
+        return $events;
     }
 }
