@@ -12,6 +12,11 @@ class InMemoryEventBus implements EventBusInterface
     /** @var DomainEvent[]  */
     private array $events;
 
+    public function __construct()
+    {
+        $this->events = [];
+    }
+
     public function notify(DomainEvent $domainEvent): void
     {
         $this->events[] = $domainEvent;

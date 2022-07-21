@@ -6,7 +6,7 @@ namespace App\Twit\Domain\User;
 
 use App\Twit\Domain\Common\ValueObject;
 
-class UserNickName extends ValueObject implements \Stringable
+final class UserNickName extends ValueObject implements \Stringable
 {
     private function __construct(private string $nickName)
     {
@@ -19,16 +19,16 @@ class UserNickName extends ValueObject implements \Stringable
         $this->nickName = $nickName;
     }
 
-    private function assertNotEmpty(string $nickName)
+    private function assertNotEmpty(string $nickName): void
     {
         if ('' === $nickName) {
             throw new \InvalidArgumentException("Nickname must not be empty");
         }
     }
 
-    public static function pick(string $userName): static
+    public static function pick(string $userName): self
     {
-        return new static($userName);
+        return new self($userName);
     }
 
     public function nickName(): string

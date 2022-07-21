@@ -7,9 +7,9 @@ namespace App\Twit\Domain\Common;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class UuidIdentity extends ValueObject implements \Stringable
+abstract class UuidIdentity extends ValueObject implements \Stringable
 {
-    private function __construct(
+    final private function __construct(
         protected string $id
     ) {
     }

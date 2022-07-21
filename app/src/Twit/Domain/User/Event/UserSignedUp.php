@@ -7,7 +7,7 @@ namespace App\Twit\Domain\User\Event;
 use App\Twit\Domain\DomainEvent;
 use App\Twit\Domain\User\User;
 
-class UserSignedUp implements DomainEvent
+final class UserSignedUp implements DomainEvent
 {
     private function __construct(
         private readonly string $userId,
@@ -15,9 +15,9 @@ class UserSignedUp implements DomainEvent
     ) {
     }
 
-    public static function fromUser(User $user): static
+    public static function fromUser(User $user): self
     {
-        return new static(
+        return new self(
             $user->userId()->id(),
             new \DateTimeImmutable('now')
         );

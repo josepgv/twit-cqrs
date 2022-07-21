@@ -22,8 +22,8 @@ class User
         UserEmail $email,
         ?string $bio = null,
         ?UserWebsite $website = null,
-    ): static {
-        return new static(
+    ): User {
+        return new User(
             $userId->id(),
             $nickName->nickName(),
             $email->email(),
