@@ -10,7 +10,6 @@ use Assert\AssertionFailedException;
 
 class UserWebsite extends ValueObject implements \Stringable
 {
-
     public function __construct(
         private string $uri
     ) {
@@ -34,7 +33,7 @@ class UserWebsite extends ValueObject implements \Stringable
         try {
             Assertion::url($uri);
         } catch (AssertionFailedException $assertionFailedException) {
-            throw new \InvalidArgumentException(sprintf("%s is not a valid URL", $uri));
+            throw new \InvalidArgumentException(sprintf('%s is not a valid URL', $uri));
         }
     }
 

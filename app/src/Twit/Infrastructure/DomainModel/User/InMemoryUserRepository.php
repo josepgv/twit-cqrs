@@ -11,7 +11,7 @@ use App\Twit\Domain\User\UserRepositoryInterface;
 
 class InMemoryUserRepository implements UserRepositoryInterface
 {
-    /** @var User[]  */
+    /** @var User[] */
     private array $users = [];
 
     public function ofId(UserId $userId): ?User
@@ -26,6 +26,7 @@ class InMemoryUserRepository implements UserRepositoryInterface
                 return $user;
             }
         }
+
         return null;
     }
 

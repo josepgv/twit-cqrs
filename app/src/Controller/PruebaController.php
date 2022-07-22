@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Message\SendTwitMessage;
 use App\Twit\Application\CommandBusInterface;
 use App\Twit\Application\QueryBusInterface;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Application\User\Query\TotalUsersCountQuery;
-use App\Twit\Domain\Repository\TwitRepository;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,32 +24,32 @@ class PruebaController extends AbstractController
 
         $command = new SignUpCommand(
             UserId::nextIdentity()->id(),
-            'manolito' . random_int(0, 5000),
+            'manolito'.random_int(0, 5000),
             'mano@lito.com'
         );
         $commandBus->handle($command);
 
-        //$user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
+        // $user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
         $user = $repository->ofId(UserId::fromString($command->userId));
         $user = [
-            'userId'   => $user?->userId()->id(),
+            'userId' => $user?->userId()->id(),
             'nickName' => $user?->nickName()->nickName(),
-            'bio'      => $user?->bio(),
-            'website'  => $user?->website()?->uri(),
-            'email'    => $user?->email()->email(),
+            'bio' => $user?->bio(),
+            'website' => $user?->website()?->uri(),
+            'email' => $user?->email()->email(),
         ];
-        //return new JsonResponse(['user' => $user]);
+        // return new JsonResponse(['user' => $user]);
 
         return $this->render('prueba/index.html.twig', [
             'controller_name' => 'PruebaController',
             'user' => $user,
-            'totalUsers' => $totalUsers
+            'totalUsers' => $totalUsers,
         ]);
     }
+
     #[Route('/users/totalcount', name: 'total_users_count')]
     public function totalUsersCount(QueryBusInterface $bus): JsonResponse
     {
         return new JsonResponse($bus->query(new TotalUsersCountQuery()));
     }
-    
 }

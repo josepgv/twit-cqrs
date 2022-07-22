@@ -21,7 +21,7 @@ class UserSignedUpEventHandler
 
     public function __invoke(UserSignedUp $event): void
     {
-        $this->logger->info(sprintf("User %s signed up on %s", $event->userId(), $event->occurredOn()->format('d/m/Y H:i:s')));
+        $this->logger->info(sprintf('User %s signed up on %s', $event->userId(), $event->occurredOn()->format('d/m/Y H:i:s')));
         $this->projectionBus->project(new IncrementTotalUsersProjection());
         $this->projectionBus->project(new CreateUserFollowersCountProjection(UserId::fromString($event->userId())));
     }

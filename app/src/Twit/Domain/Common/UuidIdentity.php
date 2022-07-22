@@ -22,8 +22,9 @@ abstract class UuidIdentity extends ValueObject implements \Stringable
     public static function fromString(string $id): static
     {
         if (!Uuid::isValid($id)) {
-            throw new \InvalidArgumentException(sprintf("The value %s is not a valid Uuid", $id));
+            throw new \InvalidArgumentException(sprintf('The value %s is not a valid Uuid', $id));
         }
+
         return new static($id);
     }
 

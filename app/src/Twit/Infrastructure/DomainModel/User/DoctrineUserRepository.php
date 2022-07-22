@@ -14,7 +14,6 @@ class DoctrineUserRepository implements UserRepositoryInterface
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {
-
     }
 
     public function ofId(UserId $userId): ?User
@@ -22,7 +21,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
         return $this->entityManager->getRepository(User::class)
             ->findOneBy(
                 [
-                    'userId' => $userId->id()
+                    'userId' => $userId->id(),
                 ]
             );
     }
@@ -32,13 +31,13 @@ class DoctrineUserRepository implements UserRepositoryInterface
         return $this->entityManager
             ->getRepository(User::class)
             ->findOneBy([
-                'nickName' => $nickName->nickName()
+                'nickName' => $nickName->nickName(),
             ]);
     }
 
     public function add(User $user): void
     {
         $this->entityManager->persist($user);
-        //$this->entityManager->flush();
+        // $this->entityManager->flush();
     }
 }

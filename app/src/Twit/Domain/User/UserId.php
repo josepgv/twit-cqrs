@@ -8,5 +8,4 @@ use App\Twit\Domain\Common\UuidIdentity;
 
 final class UserId extends UuidIdentity
 {
-
 }

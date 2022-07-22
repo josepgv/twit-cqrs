@@ -28,7 +28,7 @@ class SignUpCommandHandler
         $userNickName = UserNickName::pick($command->nickName);
         $email = UserEmail::fromString($command->email);
         $bio = $command->bio;
-        $website = ($command->website !== null) ? UserWebsite::fromString($command->website) : null;
+        $website = (null !== $command->website) ? UserWebsite::fromString($command->website) : null;
 
         $existingUser = $this->userRepository->ofId($userId);
         $this->checkUserWithSameIdDoesNotExist($existingUser, $userId);
@@ -45,7 +45,7 @@ class SignUpCommandHandler
         );
 
         $this->userRepository->add($user);
-        //$this->eventBus->notify(UserSignedUp::fromUser($user));
+        // $this->eventBus->notify(UserSignedUp::fromUser($user));
         $this->eventBus->notifyAll($user->getAndFlushDomainEvents());
     }
 

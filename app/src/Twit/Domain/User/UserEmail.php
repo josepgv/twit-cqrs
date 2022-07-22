@@ -33,7 +33,7 @@ final class UserEmail extends ValueObject implements \Stringable
     private function assertEmailIsValid(string $email): void
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException(sprintf("%s is not a valid email address", $email));
+            throw new \InvalidArgumentException(sprintf('%s is not a valid email address', $email));
         }
     }
 

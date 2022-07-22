@@ -11,7 +11,7 @@ final class InMemoryProjectionBus implements ProjectionBusInterface
 {
     /** @var Projection[] */
     private array $projections = [];
-    /** @var array<string, int>  */
+    /** @var array<string, int> */
     private array $projectionsCounter = [];
 
     public function project(Projection $projection): void

@@ -12,7 +12,6 @@ interface EventBusInterface
 
     /**
      * @param DomainEvent[] $domainEvents
-     * @return void
      */
     public function notifyAll(array $domainEvents): void;
 }

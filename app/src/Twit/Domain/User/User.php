@@ -49,6 +49,7 @@ class User
         if ('' === $value) {
             throw new \InvalidArgumentException($errorMessage);
         }
+
         return $value;
     }
 
@@ -74,7 +75,7 @@ class User
 
     public function website(): ?UserWebsite
     {
-        return ($this->website !== null) ? UserWebsite::fromString($this->website) : null;
+        return (null !== $this->website) ? UserWebsite::fromString($this->website) : null;
     }
 
     protected function addDomainEvent(DomainEvent $domainEvent): void

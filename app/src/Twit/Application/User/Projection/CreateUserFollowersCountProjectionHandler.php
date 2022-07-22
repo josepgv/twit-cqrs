@@ -17,10 +17,10 @@ class CreateUserFollowersCountProjectionHandler
     public function __invoke(CreateUserFollowersCountProjection $projection): void
     {
         $this->redis->hMSet(
-            sprintf("%s:%s", self::USER_FOLLOWERS_COUNT_PREFIX, $projection->getUserId()->id()),
+            sprintf('%s:%s', self::USER_FOLLOWERS_COUNT_PREFIX, $projection->getUserId()->id()),
             [
                 'id' => $projection->getUserId()->id(),
-                'follower_count' => 0
+                'follower_count' => 0,
             ]
         );
     }

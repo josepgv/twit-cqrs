@@ -9,7 +9,7 @@ use App\Twit\Domain\DomainEvent;
 
 class InMemoryEventBus implements EventBusInterface
 {
-    /** @var DomainEvent[]  */
+    /** @var DomainEvent[] */
     private array $events;
 
     public function __construct()

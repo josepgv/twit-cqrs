@@ -6,5 +6,4 @@ namespace App\Twit\Domain\Common;
 
 abstract class ValueObject
 {
-
 }

@@ -22,7 +22,7 @@ final class UserNickName extends ValueObject implements \Stringable
     private function assertNotEmpty(string $nickName): void
     {
         if ('' === $nickName) {
-            throw new \InvalidArgumentException("Nickname must not be empty");
+            throw new \InvalidArgumentException('Nickname must not be empty');
         }
     }
 

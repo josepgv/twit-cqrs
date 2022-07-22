@@ -6,5 +6,4 @@ namespace App\Twit\Application;
 
 interface Query
 {
-
 }
