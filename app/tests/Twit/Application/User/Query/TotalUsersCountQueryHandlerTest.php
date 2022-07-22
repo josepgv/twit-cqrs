@@ -41,4 +41,22 @@ class TotalUsersCountQueryHandlerTest extends TestCase
         $this->assertEquals(7, $queryResult->amount);
         $this->assertEquals((new \DateTimeImmutable('today')), $queryResult->last_updated);
     }
+
+    public function testItReturnsWithTotalUsersCountResponseWhenRedisResponseContainsInvalidLastUpdatedDate(): void
+    {
+        $redisMock = $this->createMock(\Redis::class);
+        $redisMock->method('hGetAll')->willReturn([
+            'amount' => 7,
+            'last_updated' => 'not-a-valid-date'
+        ]);
+
+        $queryHandler = new TotalUsersCountQueryHandler($redisMock);
+
+        $queryResult = $queryHandler(new TotalUsersCountQuery());
+
+        $this->assertInstanceOf(TotalUsersCountResponse::class, $queryResult);
+        $this->assertEquals(7, $queryResult->amount);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $queryResult->last_updated);
+        //$this->assertEquals((new \DateTimeImmutable('now')), $queryResult->last_updated); //@todo microseconds issue
+    }
 }
