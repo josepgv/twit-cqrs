@@ -39,7 +39,7 @@ logs: ## Show Symfony logs in real time
 composer-install: ## Installs composer dependencies
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} composer install --no-interaction
 
-.PHONY: migrations migrations-test
+.PHONY: migrations migrations-test worker
 migrations: ## Run migrations for dev/prod environments
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} bin/console doctrine:migration:migrate -n
 
@@ -51,6 +51,9 @@ code-style:
 
 code-style-check:
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} vendor/bin/php-cs-fixer fix src --rules=@Symfony --dry-run
+
+worker: ## Run Symfony messenger worker
+	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} ./bin/console mess:con events_async commands_async projections_async -vv
 # End backend commands
 
 ssh-be: ## bash into the be container
@@ -59,3 +62,5 @@ ssh-be: ## bash into the be container
 .PHONY: tests
 tests:
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} vendor/bin/simple-phpunit -c phpunit.xml.dist
+
+
