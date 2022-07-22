@@ -57,7 +57,6 @@ class SignUpCliCommand extends Command
         $this->commandBus->handle($signUpCommand);
 
         $io->success(sprintf('User "%s" created successfully!', $signUpCommand->nickName));
-
         return Command::SUCCESS;
     }
 }
