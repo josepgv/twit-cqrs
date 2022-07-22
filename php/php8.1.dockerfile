@@ -47,4 +47,5 @@ RUN if [ $WITH_XDEBUG = true ] ; then \
             echo "max_execution_time = 3600" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
             echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
             echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+            echo "xdebug.max_nesting_level=512" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
         fi ;
