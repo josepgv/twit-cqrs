@@ -35,6 +35,7 @@ services:
     # Buses
     App\Twit\Application\CommandBusInterface: '@App\Twit\Infrastructure\Application\SymfonyCommandBus'
     App\Twit\Application\EventBusInterface: '@App\Twit\Infrastructure\Application\SymfonyEventBus'
+    App\Twit\Application\ProjectionBusInterface: '@App\Twit\Infrastructure\Application\SymfonyProjectionBus'
 
     # Command Handlers
     command_handlers:
