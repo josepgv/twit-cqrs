@@ -19,11 +19,18 @@ final class InMemoryProjectionBus implements ProjectionBusInterface
         $this->projections[$projection::class] = $projection;
         array_key_exists($projection::class, $this->projectionsCounter) ? $this->projectionsCounter[$projection::class]++ : $this->projectionsCounter[$projection::class] = 1;
     }
+
+    /**
+     * @return Projection[]
+     */
     public function getProjections(): array
     {
         return $this->projections;
     }
 
+    /**
+     * @return int[]
+     */
     public function getProjectionsCounter(): array
     {
         return $this->projectionsCounter;

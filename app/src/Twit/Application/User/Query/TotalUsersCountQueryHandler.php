@@ -18,9 +18,14 @@ class TotalUsersCountQueryHandler
             return new TotalUsersCountResponse(0, new \DateTimeImmutable('now'));
         }
 
+        $last_updated = \DateTimeImmutable::createFromFormat('d/m/Y H:i:s', $total_users['last_updated']);
+        if (!$last_updated) {
+            $last_updated = new \DateTimeImmutable('now');
+        }
+
         return new TotalUsersCountResponse(
             intval($total_users['amount']),
-            \DateTimeImmutable::createFromFormat('d/m/Y H:i:s', $total_users['last_updated'])
+            $last_updated
         );
     }
 }
