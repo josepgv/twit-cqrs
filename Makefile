@@ -10,9 +10,13 @@ help: ## Show this help message
 	@echo 'targets:'
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
 
-start: ## Start the containers
+start: ## Start the containers in detached mode
 	docker network create ${DOCKER_NETWORK} || true
 	U_ID=${UID} docker-compose up -d
+
+up: ## Start the containers in non-detached mode
+	docker network create ${DOCKER_NETWORK} || true
+	U_ID=${UID} docker-compose up
 
 stop: ## Stop the containers
 	U_ID=${UID} docker-compose stop
