@@ -9,7 +9,6 @@ use App\Entity\UserApiResource;
 use App\Twit\Application\CommandBusInterface;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Domain\User\UserEmail;
-use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserNickName;
 use App\Twit\Domain\User\UserWebsite;
 use Ramsey\Uuid\Uuid;
@@ -33,7 +32,7 @@ class UserApiResourceDataPersister implements DataPersisterInterface
      */
     public function persist($data): UserApiResource
     {
-        $userId  = Uuid::uuid4();
+        $userId = Uuid::uuid4();
         $command = new SignUpCommand(
             $userId->toString(),
             UserNickName::pick($data->nickName)->nickName(),
