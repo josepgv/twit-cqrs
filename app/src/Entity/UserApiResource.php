@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Ramsey\Uuid\UuidInterface;
@@ -18,5 +17,4 @@ final class UserApiResource
     public string $email;
     public ?string $bio;
     public ?string $website;
-
 }
