@@ -12,6 +12,7 @@ use App\Twit\Domain\User\UserEmail;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserNickName;
 use App\Twit\Domain\User\UserWebsite;
+use Ramsey\Uuid\Uuid;
 
 class UserApiResourceDataPersister implements DataPersisterInterface
 {
@@ -24,7 +25,7 @@ class UserApiResourceDataPersister implements DataPersisterInterface
      */
     public function supports($data): bool
     {
-        return $data instanceof UserApiResource; // && null === $data->id;
+        return $data instanceof UserApiResource && null === $data->id;
     }
 
     /**
@@ -32,14 +33,18 @@ class UserApiResourceDataPersister implements DataPersisterInterface
      */
     public function persist($data): UserApiResource
     {
+        $userId  = Uuid::uuid4();
         $command = new SignUpCommand(
-            UserId::nextIdentity()->id(),
+            $userId->toString(),
             UserNickName::pick($data->nickName)->nickName(),
             UserEmail::fromString($data->email)->email(),
-            $data->bio,
-            UserWebsite::fromString($data->website)->uri()
+            $data->bio ?? null,
+            isset($data->website) ? UserWebsite::fromString($data->website)->uri() : null
         );
         $this->commandBus->handle($command);
+
+        $data->id = $userId;
+        $data->userId = $userId->toString();
 
         return $data;
     }
