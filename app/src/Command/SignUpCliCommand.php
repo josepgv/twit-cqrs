@@ -52,7 +52,8 @@ class SignUpCliCommand extends Command
             $userNickName,
             $userEmail,
             $userBio,
-            $userWebsite);
+            $userWebsite
+        );
 
         $this->commandBus->handle($signUpCommand);
 

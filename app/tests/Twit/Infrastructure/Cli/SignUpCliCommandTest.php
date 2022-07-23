@@ -14,8 +14,7 @@ use Symfony\Component\Messenger\Envelope;
 
 class SignUpCliCommandTest extends KernelTestCase
 {
-
-    public function testExecute(): void
+    public function testSignUpCliCommandCanSignUpCorrectlyAndTheUserNicknameIsShown(): void
     {
         $kernel      = self::bootKernel();
         $application = new Application($kernel);
@@ -23,19 +22,14 @@ class SignUpCliCommandTest extends KernelTestCase
         $commandBus = $this->createMock(CommandBusInterface::class);
         $commandBus->expects($this->atLeastOnce())
             ->method('handle')
-            //->with()
             ->willReturn(new Envelope(new \stdClass()));
 
-        //$commandBus = $kernel->getContainer()->get('command.bus');
-
-        //$command = $application->find('twit:sign-up');
         $command       = new SignUpCliCommand($commandBus);
         $commandTester = new CommandTester($command);
 
         $commandTester->setInputs(['Manolito', 'mano@lit.com', 'puf', null]);
 
         $commandTester->execute([]);
-
 
         $commandTester->assertCommandIsSuccessful();
 

@@ -8,7 +8,7 @@ use Symfony\Component\BrowserKit\AbstractBrowser;
 
 class TotalCountTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function testUsersTotalCountEndpointRespondsCorrectly(): void
     {
         $client = self::createClient();
         $client->setServerParameter('CONTENT_TYPE', 'application/json');
