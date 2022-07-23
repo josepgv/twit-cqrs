@@ -7,8 +7,8 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Ramsey\Uuid\UuidInterface;
 
-#[ApiResource]
-final class User
+#[ApiResource(shortName: 'user')]
+final class UserApiResource
 {
     #[ApiProperty(identifier: true)]
     public ?UuidInterface $id = null;
