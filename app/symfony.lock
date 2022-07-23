@@ -5,6 +5,20 @@
     "amphp/byte-stream": {
         "version": "v1.8.1"
     },
+    "api-platform/core": {
+        "version": "2.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.5",
+            "ref": "05b57782a78c21a664a42055dc11cf1954ca36bb"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/Entity/.gitignore"
+        ]
+    },
     "beberlei/assert": {
         "version": "v3.3.2"
     },
@@ -110,6 +124,9 @@
     "felixfbecker/language-server-protocol": {
         "version": "v1.5.2"
     },
+    "fig/link-util": {
+        "version": "1.2.0"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "3.9",
         "recipe": {
@@ -151,6 +168,18 @@
     },
     "myclabs/deep-copy": {
         "version": "1.11.0"
+    },
+    "nelmio/cors-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "config/packages/nelmio_cors.yaml"
+        ]
     },
     "netresearch/jsonmapper": {
         "version": "v4.0.0"
@@ -738,5 +767,8 @@
     },
     "webmozart/path-util": {
         "version": "2.3.0"
+    },
+    "willdurand/negotiation": {
+        "version": "3.1.0"
     }
 }
