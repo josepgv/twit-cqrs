@@ -8,8 +8,10 @@ use App\Twit\Application\CommandBusInterface;
 use App\Twit\Application\QueryBusInterface;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Application\User\Query\TotalUsersCountQuery;
+use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +23,9 @@ class PruebaController extends AbstractController
     public function index(UserRepositoryInterface $repository, CommandBusInterface $commandBus, QueryBusInterface $queryBus): Response
     {
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
+
+        /** @var ArrayCollection<int, User> $allUsers */
+        $allUsers = $repository->getAll(15); // @todo: must create a Read Model Query
 
         $command = new SignUpCommand(
             UserId::nextIdentity()->id(),
@@ -44,6 +49,7 @@ class PruebaController extends AbstractController
             'controller_name' => 'PruebaController',
             'user' => $user,
             'totalUsers' => $totalUsers,
+            'users' => $allUsers,
         ]);
     }
 

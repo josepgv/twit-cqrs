@@ -8,6 +8,7 @@ use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserNickName;
 use App\Twit\Domain\User\UserRepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class InMemoryUserRepository implements UserRepositoryInterface
 {
@@ -35,5 +36,13 @@ class InMemoryUserRepository implements UserRepositoryInterface
         if (null === $this->ofId($user->userId())) {
             $this->users[$user->userId()->id()] = $user;
         }
+    }
+
+    /**
+     * @return ArrayCollection<int, User>
+     */
+    public function getAll(?int $limit = 0): ArrayCollection
+    {
+        return new ArrayCollection($this->users);
     }
 }
