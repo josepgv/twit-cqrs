@@ -1,0 +1,15 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Twit\Domain\EventStore\EventStore" table="event_store">
+        <id name="id" type="integer" column="id" length="36">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="type" column="type" length="255" />
+        <field name="event" column="event" length="255" />
+        <field name="ocurredOn" column="ocurred_on" type="datetime_immutable"/>
+    </entity>
+</doctrine-mapping>

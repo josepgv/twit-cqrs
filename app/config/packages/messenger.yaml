@@ -14,6 +14,7 @@ framework:
                 default_middleware: allow_no_handlers
                 middleware:
                     - validation
+                    - 'App\Twit\Infrastructure\Messenger\EventStoreMiddleware'
             projection.bus:
                 default_middleware: allow_no_handlers
                 middleware:
