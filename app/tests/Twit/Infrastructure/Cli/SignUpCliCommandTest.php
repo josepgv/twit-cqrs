@@ -27,7 +27,7 @@ class SignUpCliCommandTest extends KernelTestCase
         $command       = new SignUpCliCommand($commandBus);
         $commandTester = new CommandTester($command);
 
-        $commandTester->setInputs(['Manolito', 'mano@lit.com', 'puf', null]);
+        $commandTester->setInputs(['Manolito', 'mano@lit.com', 'puf', 'https://google.com']);
 
         $commandTester->execute([]);
 
