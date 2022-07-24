@@ -6,7 +6,6 @@ namespace App\Twit\Domain\User\Event;
 
 use App\Twit\Domain\DomainEvent;
 use App\Twit\Domain\User\User;
-use JetBrains\PhpStorm\Internal\TentativeType;
 
 final class UserSignedUp implements DomainEvent, \JsonSerializable
 {
@@ -38,7 +37,7 @@ final class UserSignedUp implements DomainEvent, \JsonSerializable
     {
         return json_encode([
             'userId' => $this->userId(),
-            'occurredOn' => $this->occurredOn()
+            'occurredOn' => $this->occurredOn(),
         ]);
     }
 }

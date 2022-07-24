@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
 {
-    /** @var array<int, EventStore>  */
+    /** @var array<int, EventStore> */
     private array $events = [];
 
     public function __construct(private readonly SerializerInterface $serializer)

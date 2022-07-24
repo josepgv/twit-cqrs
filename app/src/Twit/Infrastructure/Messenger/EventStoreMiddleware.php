@@ -22,6 +22,7 @@ class EventStoreMiddleware implements MiddlewareInterface
             $this->eventStoreRepository->append($envelope);
         } catch (\Exception $exception) {
         }
+
         return $stack->next()->handle($envelope, $stack);
     }
 }

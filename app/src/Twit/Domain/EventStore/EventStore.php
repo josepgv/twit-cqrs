@@ -2,10 +2,10 @@
 
 namespace App\Twit\Domain\EventStore;
 
-
 class EventStore
 {
     protected ?int $id = null;
+
     public function __construct(protected string $type, protected string $event, protected \DateTimeImmutable $ocurredOn)
     {
     }
