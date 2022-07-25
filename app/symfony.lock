@@ -118,6 +118,9 @@
     "egulias/email-validator": {
         "version": "3.2"
     },
+    "fakerphp/faker": {
+        "version": "v1.20.0"
+    },
     "felixfbecker/advanced-json-rpc": {
         "version": "v3.2.1"
     },

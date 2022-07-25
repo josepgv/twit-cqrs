@@ -109,6 +109,7 @@
         }
     },
     "require-dev": {
+        "fakerphp/faker": "^1.20",
         "friendsofphp/php-cs-fixer": "^3.9",
         "infection/infection": "^0.26.13",
         "phpstan/phpstan": "^1.8",

@@ -12,6 +12,7 @@ use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class PruebaController extends AbstractController
         CommandBusInterface $commandBus,
         QueryBusInterface $queryBus
     ): Response {
+        $faker = Factory::create('es_ES');
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
 
         /** @var ArrayCollection<int, User> $allUsers */
@@ -32,8 +34,10 @@ class PruebaController extends AbstractController
 
         $command = new SignUpCommand(
             UserId::nextIdentity()->id(),
-            'manolito'.random_int(0, 5000),
-            'mano@lito.com'
+            $faker->userName(),
+            $faker->email(),
+            $faker->realTextBetween(15, 50),
+            $faker->url()
         );
         $commandBus->handle($command);
 
