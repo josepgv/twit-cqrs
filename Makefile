@@ -57,7 +57,7 @@ code-style-check:
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} vendor/bin/php-cs-fixer fix src --rules=@Symfony --dry-run
 
 worker: ## Run Symfony messenger worker
-	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} ./bin/console mess:con events_async commands_async projections_async -vv
+	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} ./bin/console mess:con events_async commands_async projections_async async -vv
 # End backend commands
 
 ssh-be: ## bash into the be container
