@@ -6,6 +6,7 @@ namespace App\Tests\Twit\Application\User;
 
 use App\Twit\Application\Projection;
 use App\Twit\Application\ProjectionBusInterface;
+use App\Twit\Application\SendUserWelcomeInterface;
 use App\Twit\Application\User\Event\UserSignedUpEventHandler;
 use App\Twit\Application\User\Projection\CreateUserFollowersCountProjection;
 use App\Twit\Application\User\Projection\IncrementTotalUsersProjection;
@@ -45,10 +46,12 @@ class UserSignedUpEventHandlerTest extends TestCase
             )
         );
 
-        $logger  = new FakeLogger();
-        $handler = new UserSignedUpEventHandler(
+        $logger          = new FakeLogger();
+        $sendUserWelcome = new FakeSendUserWelcome();
+        $handler         = new UserSignedUpEventHandler(
             $logger,
-            $projectionBus
+            $projectionBus,
+            $sendUserWelcome
         );
 
         $handler($event);
@@ -60,6 +63,7 @@ class UserSignedUpEventHandlerTest extends TestCase
 
 
         $this->assertEquals(1, $logger->timesInfoCalled);
+        $this->assertEquals(true, $sendUserWelcome->wasSent());
     }
 
     public function testInMemoryProjectionBusCountsProjectionsCorrectly(): void
@@ -73,6 +77,20 @@ class UserSignedUpEventHandlerTest extends TestCase
 
         $this->assertEquals(2, $projectionsCounter[IncrementTotalUsersProjection::class]);
         $this->assertInstanceOf(IncrementTotalUsersProjection::class, $projectionBus->getProjections()[IncrementTotalUsersProjection::class]);
+    }
+}
+
+class FakeSendUserWelcome implements SendUserWelcomeInterface
+{
+    private bool $sent = false;
+    public function send(UserId $userId): void
+    {
+        $this->sent = true;
+    }
+
+    public function wasSent(): bool
+    {
+        return $this->sent;
     }
 }
 

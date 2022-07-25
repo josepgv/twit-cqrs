@@ -20,8 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class PruebaController extends AbstractController
 {
     #[Route('/prueba', name: 'app_prueba')]
-    public function index(UserRepositoryInterface $repository, CommandBusInterface $commandBus, QueryBusInterface $queryBus): Response
-    {
+    public function index(
+        UserRepositoryInterface $repository,
+        CommandBusInterface $commandBus,
+        QueryBusInterface $queryBus
+    ): Response {
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
 
         /** @var ArrayCollection<int, User> $allUsers */

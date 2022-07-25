@@ -73,5 +73,14 @@ services:
     networks:
       - myapp
 
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog_twit_cqrs
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - myapp
+
 networks:
   myapp:
