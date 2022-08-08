@@ -1,0 +1,15 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Twit\Domain\Twit\Twit" table="twits">
+        <id name="twitId" type="string" column="twit_id" length="36">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="userId" column="user_id" length="36" />
+        <field name="content" column="content" type="text" length="255" />
+        <field name="date" column="date" type="datetime_immutable" />
+    </entity>
+</doctrine-mapping>

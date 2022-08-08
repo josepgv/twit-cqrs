@@ -29,7 +29,6 @@ class PruebaController extends AbstractController
         $faker = Factory::create('es_ES');
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
 
-        /** @var ArrayCollection<int, User> $allUsers */
         $allUsers = $repository->getAll(15); // @todo: must create a Read Model Query
 
         $command = new SignUpCommand(

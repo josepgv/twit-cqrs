@@ -15,6 +15,7 @@ interface UserRepositoryInterface
     public function add(User $user): void;
 
     /**
+     * @param int|null $limit
      * @return ArrayCollection<int, User>
      */
     public function getAll(?int $limit = 0): ArrayCollection;
