@@ -6,5 +6,4 @@ namespace App\Twit\Domain\Twit;
 
 final class TwitId extends \App\Twit\Domain\Common\UuidIdentity
 {
-
 }

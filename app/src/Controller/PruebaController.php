@@ -11,7 +11,6 @@ use App\Twit\Application\User\Query\TotalUsersCountQuery;
 use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

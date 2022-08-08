@@ -8,7 +8,7 @@ use Stringable;
 
 final class TwitContent implements Stringable
 {
-    protected const MAX_TWIT_LENGTH = 255;
+    private const MAX_TWIT_LENGTH = 255;
 
     private function __construct(private readonly string $content)
     {
@@ -17,10 +17,9 @@ final class TwitContent implements Stringable
     public static function fromString(string $content): TwitContent
     {
         if (strlen($content) > 255) {
-            throw new TwitIsTooLongException(
-                sprintf("Twit has %d characters, max is %d", strlen($content), self::MAX_TWIT_LENGTH)
-            );
+            throw new TwitIsTooLongException(sprintf('Twit has %d characters, max is %d', strlen($content), self::MAX_TWIT_LENGTH));
         }
+
         return new TwitContent($content);
     }
 

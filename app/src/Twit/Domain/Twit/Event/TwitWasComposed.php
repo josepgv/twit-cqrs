@@ -41,7 +41,7 @@ class TwitWasComposed implements DomainEvent, \JsonSerializable
             [
                 'twitId' => $this->twitId,
                 'userId' => $this->userId,
-                'occurredOn' => $this->occurredOn
+                'occurredOn' => $this->occurredOn,
             ]
         );
     }

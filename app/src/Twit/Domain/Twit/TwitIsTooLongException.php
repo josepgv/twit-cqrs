@@ -6,5 +6,4 @@ namespace App\Twit\Domain\Twit;
 
 class TwitIsTooLongException extends \InvalidArgumentException
 {
-
 }
