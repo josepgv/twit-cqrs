@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Twit\Application\CommandBusInterface;
 use App\Twit\Application\QueryBusInterface;
+use App\Twit\Application\Twit\Command\ComposeTwitCommand;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Application\User\Query\TotalUsersCountQuery;
 use App\Twit\Domain\User\User;
@@ -49,6 +50,9 @@ class PruebaController extends AbstractController
             'email' => $user?->email()->email(),
         ];
         // return new JsonResponse(['user' => $user]);
+
+        $compTwit = new ComposeTwitCommand(UserId::nextIdentity()->id(), UserId::nextIdentity()->id(), $faker->realTextBetween(50, 240));
+        $commandBus->handle($compTwit);
 
         return $this->render('prueba/index.html.twig', [
             'controller_name' => 'PruebaController',
