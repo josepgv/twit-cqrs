@@ -26,13 +26,13 @@ class DoctrineTwitRepository implements \App\Twit\Domain\Twit\TwitRepositoryInte
     }
 
     /**
-     * @param UserId $userId
      * @return ArrayCollection<int, Twit>
      */
     public function ofUserId(UserId $userId): ArrayCollection
     {
         /** @var Twit[] $results */
         $results = $this->repository->findBy(['userId' => $userId->id()]);
+
         return new ArrayCollection($results);
     }
 

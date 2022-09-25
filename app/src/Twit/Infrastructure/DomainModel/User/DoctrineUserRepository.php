@@ -43,8 +43,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param int|null $limit
-     * @return ArrayCollection
+     * @return ArrayCollection<int, User>
      */
     public function getAll(?int $limit = 0): ArrayCollection
     {
