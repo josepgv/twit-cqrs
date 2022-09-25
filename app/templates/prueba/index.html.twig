@@ -14,6 +14,18 @@
     User just created: <br>
     {{ dump(user) }}
 
+    Last twits from redis: <br>
+    {{ dump(anonTimeline) }}
+    {% for twit in anonTimeline %}
+        {# @var twit \App\Twit\Application\Twit\Query\TimelineTwitResponse #}
+        <div style="background-color: #81c8d0; padding: 10px; margin: 10px;">
+            <img src="https://avatars.dicebear.com/api/adventurer/{{ twit.userid }}.svg" height="30px" style="border: 1px solid black;">
+            @{{ twit.username }} - {{ twit.date | date }}<hr>
+            <small>{{ twit.content }}</small>
+        </div>
+    {% endfor %}
+
+
     Total of {{ totalUsers.amount }} users as of {{ totalUsers.last_updated|date }} <br>
     {{ dump(totalUsers) }}
 
@@ -22,8 +34,8 @@
         {# @var user \App\Twit\Domain\User\User #}
         <div style="background-color: darkgray; padding: 10px; margin: 10px;">
             <img src="https://avatars.dicebear.com/api/adventurer/{{ user.userId }}.svg" height="30px" style="border: 1px solid black;">
-            @{{ user.nickName }}<br>
-            <small>{{ user.bio }}</small>
+            @{{ user.nickName }} -
+            <small><i>{{ user.bio }}</i></small>
         </div>
     {% endfor %}
 
