@@ -6,6 +6,7 @@ namespace App\Twit\Domain\Twit;
 
 use App\Twit\Domain\DomainEvent;
 use App\Twit\Domain\Twit\Event\TwitWasComposed;
+use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserId;
 
 class Twit
@@ -15,7 +16,7 @@ class Twit
 
     private function __construct(
         protected string $twitId,
-        protected string $userId,
+        protected User $user,
         protected string $content,
         protected \DateTimeImmutable $date
     ) {
@@ -24,10 +25,10 @@ class Twit
 
     public static function compose(
         TwitId $twitId,
-        UserId $userId,
+        User $user,
         TwitContent $content
     ): Twit {
-        return new Twit($twitId->id(), $userId->id(), $content->getContent(), new \DateTimeImmutable('now'));
+        return new Twit($twitId->id(), $user, $content->getContent(), new \DateTimeImmutable('now'));
     }
 
     public function id(): TwitId
@@ -37,7 +38,7 @@ class Twit
 
     public function userId(): UserId
     {
-        return UserId::fromString($this->userId);
+        return $this->user()->userId();
     }
 
     public function content(): TwitContent
@@ -48,6 +49,11 @@ class Twit
     public function date(): \DateTimeImmutable
     {
         return $this->date;
+    }
+
+    public function user(): User
+    {
+        return $this->user;
     }
 
     protected function addDomainEvent(DomainEvent $domainEvent): void

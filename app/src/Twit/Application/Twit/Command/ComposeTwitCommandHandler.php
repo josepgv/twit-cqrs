@@ -27,7 +27,7 @@ class ComposeTwitCommandHandler
     {
         $twit = Twit::compose(
             TwitId::fromString($command->twitId),
-            UserId::fromString($command->userId),
+            $command->user,
             TwitContent::fromString($command->content)
         );
 
@@ -52,8 +52,8 @@ class ComposeTwitCommandHandler
     {
         // 1st check the user exists
         $user = $this->userRepository->ofId($userId);
-        if (null !== $user) {
-            throw UserCantTwitException::withIdOf($userId, "the user does not exist");
+        if (null === $user) {
+            throw UserCantTwitException::withIdOf($userId, 'the user does not exist');
         }
 
         // Then check other possible reasons, such as user is banned, throttled or any other reason

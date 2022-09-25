@@ -7,9 +7,10 @@ namespace App\Controller;
 use App\Twit\Application\CommandBusInterface;
 use App\Twit\Application\QueryBusInterface;
 use App\Twit\Application\Twit\Command\ComposeTwitCommand;
+use App\Twit\Application\Twit\Query\AnonymouseTimelineQuery;
+use App\Twit\Application\Twit\Query\TimelineTwitResponse;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Application\User\Query\TotalUsersCountQuery;
-use App\Twit\Domain\User\User;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
 use Faker\Factory;
@@ -24,10 +25,16 @@ class PruebaController extends AbstractController
     public function index(
         UserRepositoryInterface $repository,
         CommandBusInterface $commandBus,
-        QueryBusInterface $queryBus
+        QueryBusInterface $queryBus,
     ): Response {
+        // $twits = $twitRepository->ofUserId(UserId::fromString('84296aeb-e9f0-4927-a4db-dec2af82f3cc'));
+        // var_dump($twits);
+        // var_dump($twits[0]->user()->bio());
         $faker = Factory::create('es_ES');
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
+
+        /** @var array<TimelineTwitResponse> $anonTimeline */
+        $anonTimeline = $queryBus->query(new AnonymouseTimelineQuery());
 
         $allUsers = $repository->getAll(15); // @todo: must create a Read Model Query
 
@@ -42,16 +49,17 @@ class PruebaController extends AbstractController
 
         // $user = $repository->ofId(UserId::fromString('6b109464-7a9d-4972-aefb-74885bd97b18'));
         $user = $repository->ofId(UserId::fromString($command->userId));
-        $user = [
+        /*$user = [
             'userId' => $user?->userId()->id(),
             'nickName' => $user?->nickName()->nickName(),
             'bio' => $user?->bio(),
             'website' => $user?->website()?->uri(),
             'email' => $user?->email()->email(),
-        ];
+        ];*/
         // return new JsonResponse(['user' => $user]);
 
-        $compTwit = new ComposeTwitCommand(UserId::nextIdentity()->id(), UserId::nextIdentity()->id(), $faker->realTextBetween(50, 240));
+//        $compTwit = new ComposeTwitCommand(UserId::nextIdentity()->id(), $user->userId()->id(), $faker->realTextBetween(50, 240));
+        $compTwit = new ComposeTwitCommand(UserId::nextIdentity()->id(), $user, $faker->realTextBetween(50, 240));
         $commandBus->handle($compTwit);
 
         return $this->render('prueba/index.html.twig', [
@@ -59,6 +67,7 @@ class PruebaController extends AbstractController
             'user' => $user,
             'totalUsers' => $totalUsers,
             'users' => $allUsers,
+            'anonTimeline' => $anonTimeline,
         ]);
     }
 

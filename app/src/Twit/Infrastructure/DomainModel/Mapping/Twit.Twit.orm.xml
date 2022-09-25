@@ -8,8 +8,10 @@
             <generator strategy="NONE"/>
         </id>
 
-        <field name="userId" column="user_id" length="36" />
         <field name="content" column="content" type="text" length="255" />
         <field name="date" column="date" type="datetime_immutable" />
+        <many-to-one field="user" target-entity="App\Twit\Domain\User\User" fetch="EAGER">
+            <join-column name="user_id" referenced-column-name="user_id"/>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

@@ -26,10 +26,13 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 RUN composer self-update
 
 ## Install Symfony binary
-USER appuser
-RUN wget https://get.symfony.com/cli/installer -O - | bash
-USER root
-RUN mv /home/appuser/.symfony/bin/symfony /usr/local/bin/symfony
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
+RUN apt install symfony-cli
+#USER appuser
+#RUN wget https://get.symfony.com/cli/installer -O - | bash
+#USER root
+#RUN mv /home/appuser/.symfony/bin/symfony /usr/local/bin/symfony
+
 RUN mkdir /opt/phpstorm-coverage
 RUN chown -R appuser:appuser /opt/phpstorm-coverage
 RUN chmod -R 777 /opt/phpstorm-coverage
