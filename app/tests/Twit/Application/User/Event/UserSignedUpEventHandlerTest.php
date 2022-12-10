@@ -46,6 +46,10 @@ class UserSignedUpEventHandlerTest extends TestCase
             )
         );
 
+        $eventJsonSerialized = $event->jsonSerialize();
+        $expectedEventJsonSerialized = json_encode(['userId' => $userId->id(), 'occurredOn' => $event->occurredOn()]);
+        $this->assertEquals($expectedEventJsonSerialized, $eventJsonSerialized);
+
         $logger          = new FakeLogger();
         $sendUserWelcome = new FakeSendUserWelcome();
         $handler         = new UserSignedUpEventHandler(

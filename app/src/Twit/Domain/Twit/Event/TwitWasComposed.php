@@ -26,6 +26,11 @@ class TwitWasComposed implements DomainEvent, \JsonSerializable
         return $this->userId;
     }
 
+    public function occurredOn(): \DateTimeImmutable
+    {
+        return $this->occurredOn;
+    }
+
     public static function fromTwit(Twit $twit): self
     {
         return new self(

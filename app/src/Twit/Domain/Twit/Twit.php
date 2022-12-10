@@ -56,7 +56,7 @@ class Twit
         return $this->user;
     }
 
-    protected function addDomainEvent(DomainEvent $domainEvent): void
+    private function addDomainEvent(DomainEvent $domainEvent): void
     {
         $this->domainEvents[] = $domainEvent;
     }

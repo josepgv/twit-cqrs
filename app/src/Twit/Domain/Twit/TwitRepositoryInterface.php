@@ -12,7 +12,8 @@ interface TwitRepositoryInterface
     public function ofId(TwitId $twitId): ?Twit;
 
     /**
-     * @return ArrayCollection<int, Twit>
+     * @param UserId $userId
+     * @return ArrayCollection
      */
     public function ofUserId(UserId $userId): ArrayCollection;
 

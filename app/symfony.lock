@@ -127,9 +127,6 @@
     "felixfbecker/language-server-protocol": {
         "version": "v1.5.2"
     },
-    "fig/link-util": {
-        "version": "1.2.0"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "3.9",
         "recipe": {
