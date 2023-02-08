@@ -11,6 +11,7 @@ use App\Twit\Application\Twit\Query\AnonymouseTimelineQuery;
 use App\Twit\Application\Twit\Query\TimelineTwitResponse;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Application\User\Query\TotalUsersCountQuery;
+use App\Twit\Domain\Twit\TwitId;
 use App\Twit\Domain\User\UserId;
 use App\Twit\Domain\User\UserRepositoryInterface;
 use Faker\Factory;
@@ -59,7 +60,7 @@ class PruebaController extends AbstractController
         // return new JsonResponse(['user' => $user]);
 
 //        $compTwit = new ComposeTwitCommand(UserId::nextIdentity()->id(), $user->userId()->id(), $faker->realTextBetween(50, 240));
-        $compTwit = new ComposeTwitCommand(UserId::nextIdentity()->id(), $user, $faker->realTextBetween(50, 240));
+        $compTwit = new ComposeTwitCommand(TwitId::nextIdentity()->id(), $user, $faker->realTextBetween(50, 240));
         $commandBus->handle($compTwit);
 
         return $this->render('prueba/index.html.twig', [
