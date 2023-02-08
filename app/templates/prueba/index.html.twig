@@ -11,8 +11,19 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
+    {{ form_start(form) }}
+        {{ form_errors(form.content) }}
+
+        {{ form_label(form.content) }}<br>
+        {{ form_widget(form.content) }}
+
+        {{ form_row(form.submit, { 'label': 'Twit' }) }}
+    {{ form_end(form) }}
+
+    {% if user %}
     User just created: <br>
     {{ dump(user) }}
+    {% endif %}
 
     Last twits from redis: <br>
     {{ dump(anonTimeline) }}
