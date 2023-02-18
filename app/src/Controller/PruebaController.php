@@ -34,6 +34,7 @@ class PruebaController extends AbstractController
         $form = $this->createForm(TwitType::class);
         $faker = Factory::create('es_ES');
         $totalUsers = $queryBus->query(new TotalUsersCountQuery());
+        $user = null;
 
         /** @var array<TimelineTwitResponse> $anonTimeline */
         $anonTimeline = $queryBus->query(new AnonymouseTimelineQuery());
@@ -67,7 +68,7 @@ class PruebaController extends AbstractController
 
         return $this->render('prueba/index.html.twig', [
             'controller_name' => 'PruebaController',
-            'user' => $user ?? null,
+            'user' => $user,
             'totalUsers' => $totalUsers,
             'users' => $allUsers,
             'anonTimeline' => $anonTimeline,

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Twit\Application\User\Command;
 
+use App\Tests\Twit\Domain\UserTest;
 use App\Twit\Application\User\Command\SignUpCommand;
 use App\Twit\Application\User\Command\SignUpCommandHandler;
 use App\Twit\Domain\DomainEvent;
@@ -29,7 +30,7 @@ class SignUpCommandHandlerTest extends TestCase
             new SignUpCommand(
                 $uuid,
                 'Manolito',
-                'manolito@google.com',
+                UserTest::MANOLITO_AT_GOOGLE_COM,
                 'my bio',
                 'https://www.google.com'
             )
@@ -53,7 +54,7 @@ class SignUpCommandHandlerTest extends TestCase
             new SignUpCommand(
                 $uuid->toString(),
                 'Manolito',
-                'manolito@google.com',
+                UserTest::MANOLITO_AT_GOOGLE_COM,
             )
         );
 
@@ -77,7 +78,7 @@ class SignUpCommandHandlerTest extends TestCase
             new SignUpCommand(
                 Uuid::uuid4()->toString(),
                 'Manolito',
-                'manolito@google.com',
+                UserTest::MANOLITO_AT_GOOGLE_COM,
             )
         );
 
@@ -103,7 +104,7 @@ class SignUpCommandHandlerTest extends TestCase
             new SignUpCommand(
                 $uuid,
                 'Manolito',
-                'manolito@google.com',
+                UserTest::MANOLITO_AT_GOOGLE_COM,
                 'my bio',
                 'https://www.google.com'
             )

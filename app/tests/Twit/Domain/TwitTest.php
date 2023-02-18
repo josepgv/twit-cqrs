@@ -21,6 +21,8 @@ use PHPUnit\Framework\TestCase;
 
 class TwitTest extends TestCase
 {
+    public const SOME_CONTENT = "This is the content";
+
     public function testNormalTwitCanBeCreated(): void
     {
         $twitId = TwitId::nextIdentity();
@@ -31,15 +33,15 @@ class TwitTest extends TestCase
         $twit = Twit::compose(
             $twitId,
             $user,
-            TwitContent::fromString("This is the content")
+            TwitContent::fromString(self::SOME_CONTENT)
         );
 
         $this->assertInstanceOf(TwitId::class, $twit->id());
         $this->assertInstanceOf(UserId::class, $twit->userId());
         $this->assertInstanceOf(TwitContent::class, $twit->content());
         $this->assertInstanceOf(\DateTimeImmutable::class, $twit->date());
-        $this->assertEquals("This is the content", $twit->content()->getContent());
-        $this->assertEquals("This is the content", $twit->content());
+        $this->assertEquals(self::SOME_CONTENT, $twit->content()->getContent());
+        $this->assertEquals(self::SOME_CONTENT, $twit->content());
         $this->assertSame($user, $twit->user());
 
         $events = $twit->getAndFlushDomainEvents();
@@ -83,7 +85,7 @@ class TwitTest extends TestCase
                 UserNickName::pick('manolito'),
                 UserEmail::fromString('a@b.com'),
                 '...',
-                UserWebsite::fromString('http://google.com')
+                UserWebsite::fromString('https://google.com')
             ),
             TwitContent::fromString($content)
         );
